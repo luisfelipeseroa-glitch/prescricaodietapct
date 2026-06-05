@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedido de Dieta — UPA Rocinha</title>
+  <meta name="theme-color" content="#92400e">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --amber-50:  #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-200: #fde68a;
+      --amber-300: #fcd34d;
+      --amber-400: #fbbf24;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+      --amber-700: #b45309;
+      --amber-800: #92400e;
+      --amber-900: #78350f;
+      --amber-950: #451a03;
+      --text-main: #1c0a00;
+      --text-mid:  #78350f;
+      --text-soft: #a16207;
+      --bg:        #fffbeb;
+      --card-bg:   #ffffff;
+      --border:    #fde68a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--text-main);
+      background-image:
+        radial-gradient(ellipse at 20% 0%, rgba(251,191,36,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 100%, rgba(217,119,6,0.12) 0%, transparent 60%);
+    }
+
+    /* ── HEADER ─────────────────────────────────────── */
+    .header {
+      background: linear-gradient(135deg, var(--amber-800) 0%, var(--amber-700) 60%, var(--amber-600) 100%);
+      color: #fff;
+      padding: 0;
+      border-bottom: 4px solid var(--amber-400);
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .header-inner {
+      position: relative; z-index: 1;
+      padding: 20px 24px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .header-back {
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      color: white; padding: 8px 14px;
+      border-radius: 10px; font-size: 0.82rem;
+      font-weight: 700; cursor: pointer;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .header-back:hover { background: rgba(255,255,255,0.28); }
+    .header-emoji { font-size: 2rem; flex-shrink: 0; }
+    .header-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 900;
+      letter-spacing: -0.02em; line-height: 1.15;
+    }
+    .header-sub { font-size: 0.72rem; color: rgba(255,255,255,0.65); margin-top: 3px; font-weight: 500; }
+
+    /* ── AVISO ───────────────────────────────────────── */
+    .aviso {
+      background: var(--amber-100);
+      border-left: 4px solid var(--amber-500);
+      margin: 16px 16px 0;
+      border-radius: 0 12px 12px 0;
+      padding: 11px 16px;
+      font-size: 0.77rem; color: var(--amber-900); font-weight: 600;
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .aviso-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── CONTAINER ───────────────────────────────────── */
+    .container { padding: 16px 16px 40px; max-width: 680px; margin: 0 auto; }
+
+    /* ── SECTION TITLE ───────────────────────────────── */
+    .secao-titulo {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--text-soft);
+      margin: 24px 0 10px 2px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .secao-titulo::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(to right, var(--amber-300), transparent);
+    }
+
+    /* ── CARD / FORM ─────────────────────────────────── */
+    .form-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 12px rgba(180,83,9,0.08), 0 1px 3px rgba(180,83,9,0.06);
+      border: 1.5px solid var(--border);
+      transition: box-shadow 0.2s;
+    }
+    .form-card:focus-within {
+      box-shadow: 0 4px 20px rgba(217,119,6,0.15);
+      border-color: var(--amber-400);
+    }
+
+    /* ── GRID CAMPOS ─────────────────────────────────── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .span-2 { grid-column: span 2; }
+
+    .campo { display: flex; flex-direction: column; gap: 5px; }
+    .campo label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.6px;
+      text-transform: uppercase; color: var(--text-mid);
+    }
+    .campo input,
+    .campo select,
+    .campo textarea {
+      border: 1.5px solid var(--amber-200);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      background: var(--amber-50);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      width: 100%;
+    }
+    .campo input:focus,
+    .campo select:focus,
+    .campo textarea:focus {
+      outline: none;
+      border-color: var(--amber-500);
+      box-shadow: 0 0 0 3px rgba(245,158,11,0.18);
+      background: #fff;
+    }
+    .campo textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
+    .campo select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23b45309' d='M1 1l5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+
+    /* Chip groups */
+    .chip-group { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip-group input[type="checkbox"] { display: none; }
+    .chip-group label.chip {
+      cursor: pointer;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1.5px solid var(--amber-300);
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--amber-800);
+      background: var(--amber-50);
+      transition: all 0.18s;
+      user-select: none;
+    }
+    .chip-group input[type="checkbox"]:checked + label.chip {
+      background: var(--amber-500);
+      border-color: var(--amber-600);
+      color: #fff;
+    }
+    .chip-group label.chip:hover { border-color: var(--amber-500); background: var(--amber-100); }
+
+    /* Radio group */
+    .radio-group { display: flex; flex-wrap: wrap; gap: 7px; }
+    .radio-group input[type="radio"] { display: none; }
+    .radio-group label.radio-pill {
+      cursor: pointer;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--amber-300);
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--amber-800);
+      background: var(--amber-50);
+      transition: all 0.18s;
+      user-select: none;
+    }
+    .radio-group input[type="radio"]:checked + label.radio-pill {
+      background: var(--amber-700);
+      border-color: var(--amber-800);
+      color: #fff;
+    }
+
+    /* ── BLOCO ENTERAL (oculto por padrão) ──────────── */
+    .enteral-section {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    .enteral-section.aberto {
+      max-height: 600px; opacity: 1;
+    }
+    .enteral-card {
+      background: linear-gradient(135deg, #fef9ee, #fff8e1);
+      border: 1.5px dashed var(--amber-400);
+      border-radius: 14px; padding: 18px;
+      margin-top: 14px;
+    }
+    .enteral-title {
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--amber-700);
+      margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
+    }
+    .badge-experimental {
+      background: var(--amber-200); color: var(--amber-900);
+      font-size: 0.58rem; padding: 2px 7px; border-radius: 8px;
+      font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    /* ── BOTÃO SUBMIT ────────────────────────────────── */
+    .btn-submit {
+      width: 100%; margin-top: 20px;
+      background: linear-gradient(135deg, var(--amber-600), var(--amber-700));
+      color: white; border: none;
+      padding: 16px 24px; border-radius: 14px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-weight: 700;
+      cursor: pointer; letter-spacing: 0.02em;
+      box-shadow: 0 4px 16px rgba(180,83,9,0.35);
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-submit:hover {
+      background: linear-gradient(135deg, var(--amber-700), var(--amber-800));
+      box-shadow: 0 6px 22px rgba(180,83,9,0.45);
+      transform: translateY(-1px);
+    }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* ── FEEDBACK ────────────────────────────────────── */
+    .feedback {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 0.85rem; font-weight: 600;
+      align-items: center; gap: 10px;
+    }
+    .feedback.sucesso {
+      display: flex;
+      background: #f0fdf4; border: 1.5px solid #86efac;
+      color: #166534;
+    }
+    .feedback.erro {
+      display: flex;
+      background: #fef2f2; border: 1.5px solid #fca5a5;
+      color: #991b1b;
+    }
+
+    /* ── SPINNER ─────────────────────────────────────── */
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2.5px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── SEPARADOR ───────────────────────────────────── */
+    .sep {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--amber-200), transparent);
+      margin: 16px 0;
+    }
+
+    /* ── CAMPO OBRIGATÓRIO MARCADOR ──────────────────── */
+    .req { color: var(--amber-600); margin-left: 2px; }
+
+    /* ── RODAPÉ ──────────────────────────────────────── */
+    footer {
+      text-align: center; padding: 28px 16px;
+      font-size: 0.72rem; color: var(--text-soft); font-weight: 600;
+      border-top: 1px solid var(--amber-200);
+    }
+
+    /* ── RESPONSIVO ──────────────────────────────────── */
+    @media (max-width: 520px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .span-2 { grid-column: span 1; }
+      .header-title { font-size: 1.05rem; }
+    }
+
+    /* ── ANIMAÇÃO ENTRADA ─────────────────────────────── */
+    .form-card {
+      animation: fadeUp 0.35s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .form-card:nth-child(1) { animation-delay: 0.05s; }
+    .form-card:nth-child(2) { animation-delay: 0.10s; }
+    .form-card:nth-child(3) { animation-delay: 0.15s; }
+    .form-card:nth-child(4) { animation-delay: 0.20s; }
+    .form-card:nth-child(5) { animation-delay: 0.25s; }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="header-back">← Voltar</a>
+    <span class="header-emoji">🍽️</span>
+    <div>
+      <div class="header-title">Pedido de Dieta</div>
+      <div class="header-sub">Nutrição Clínica • UPA Rocinha</div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ AVISO ════════════════════════════════════════════════════════════════ -->
+<div class="aviso">
+  <span class="aviso-icon">⚠️</span>
+  <span>Preencha todos os campos obrigatórios (<strong>*</strong>). O pedido será registrado na planilha da equipe de nutrição após o envio. Em caso de urgência, acione diretamente a equipe.</span>
+</div>
+
+<!-- ═══ FORMULÁRIO ══════════════════════════════════════════════════════════ -->
+<div class="container">
+  <form id="formDieta" novalidate>
+
+    <!-- IDENTIFICAÇÃO DO PACIENTE -->
+    <div class="secao-titulo">🏥 Identificação do Paciente</div>
+
+    <div class="form-card">
+      <div class="grid-2">
+        <div class="campo span-2">
+          <label for="paciente">Nome do Paciente <span class="req">*</span></label>
+          <input type="text" id="paciente" name="paciente" placeholder="Nome completo do paciente" required autocomplete="off">
+        </div>
+        <div class="campo">
+          <label for="leito">Leito / Box <span class="req">*</span></label>
+          <input type="text" id="leito" name="leito" placeholder="Ex: Box 3, Obs 7..." required>
+        </div>
+        <div class="campo">
+          <label for="idade">Idade</label>
+          <input type="text" id="idade" name="idade" placeholder="Ex: 45 anos">
+        </div>
+        <div class="campo">
+          <label for="peso">Peso estimado (kg)</label>
+          <input type="number" id="peso" name="peso" placeholder="kg" step="0.1" min="1" max="300">
+        </div>
+        <div class="campo">
+          <label for="diagnostico">Diagnóstico principal</label>
+          <input type="text" id="diagnostico" name="diagnostico" placeholder="CID ou descrição sumária">
+        </div>
+      </div>
+    </div>
+
+    <!-- TIPO DE DIETA ORAL -->
+    <div class="secao-titulo">🥗 Dieta Via Oral</div>
+
+    <div class="form-card">
+      <div class="campo">
+        <label>Tipo de Dieta <span class="req">*</span></label>
+        <div class="radio-group">
+          <input type="radio" name="tipoDieta" id="d-geral"    value="Geral" checked>
+          <label class="radio-pill" for="d-geral">🍽️ Geral</label>
+
+          <input type="radio" name="tipoDieta" id="d-branda"   value="Branda">
+          <label class="radio-pill" for="d-branda">🥣 Branda</label>
+
+          <input type="radio" name="tipoDieta" id="d-pastosa"  value="Pastosa">
+          <label class="radio-pill" for="d-pastosa">🥣 Pastosa</label>
+
+          <input type="radio" name="tipoDieta" id="d-liquida"  value="Líquida Completa">
+          <label class="radio-pill" for="d-liquida">🥤 Líquida Completa</label>
+
+          <input type="radio" name="tipoDieta" id="d-liq-res"  value="Líquida Restrita">
+          <label class="radio-pill" for="d-liq-res">💧 Líquida Restrita</label>
+
+          <input type="radio" name="tipoDieta" id="d-zero"     value="Dieta Zero">
+          <label class="radio-pill" for="d-zero">🚫 Dieta Zero</label>
+        </div>
+      </div>
+
+      <div class="sep"></div>
+
+      <div class="grid-2">
+        <div class="campo">
+          <label for="consistencia">Consistência / Textura</label>
+          <select id="consistencia" name="consistencia">
+            <option value="">— Padrão conforme tipo —</option>
+            <option>Normal</option>
+            <option>Picada</option>
+            <option>Triturada</option>
+            <option>Homogênea</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="volume">Volume / Porção</label>
+          <select id="volume" name="volume">
+            <option value="">— Padrão da unidade —</option>
+            <option>Pequena (200 ml)</option>
+            <option>Média (350 ml)</option>
+            <option>Grande (500 ml)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sep"></div>
+
+      <div class="campo">
+        <label>Restrições / Alergias alimentares</label>
+        <div class="chip-group">
+          <input type="checkbox" id="r-sal"      value="Sem sal"><label class="chip" for="r-sal">🧂 Sem sal</label>
+          <input type="checkbox" id="r-acucar"   value="Sem açúcar"><label class="chip" for="r-acucar">🍬 Sem açúcar</label>
+          <input type="checkbox" id="r-gluten"   value="Sem glúten"><label class="chip" for="r-gluten">🌾 Sem glúten</label>
+          <input type="checkbox" id="r-lactose"  value="Sem lactose"><label class="chip" for="r-lactose">🥛 Sem lactose</label>
+          <input type="checkbox" id="r-gordura"  value="Sem gordura"><label class="chip" for="r-gordura">🫒 Hipogordurosa</label>
+          <input type="checkbox" id="r-potassio" value="Sem potássio"><label class="chip" for="r-potassio">🍌 Hipopotássica</label>
+          <input type="checkbox" id="r-fibra"    value="Com fibra"><label class="chip" for="r-fibra">🥦 Rica em fibras</label>
+        </div>
+      </div>
+
+      <div class="sep"></div>
+
+      <div class="campo">
+        <label for="restricao-livre">Outras restrições / alergias</label>
+        <input type="text" id="restricao-livre" name="restricaoLivre" placeholder="Ex: alergia a amendoim, ovo...">
+      </div>
+    </div>
+
+    <!-- DIETA ENTERAL -->
+    <div class="secao-titulo">🩺 Dieta Enteral</div>
+
+    <div class="form-card">
+      <div class="campo">
+        <label>Necessita de dieta enteral?</label>
+        <div class="radio-group">
+          <input type="radio" name="enteral" id="ent-nao" value="Não" checked>
+          <label class="radio-pill" for="ent-nao">✖️ Não</label>
+
+          <input type="radio" name="enteral" id="ent-sim" value="Sim">
+          <label class="radio-pill" for="ent-sim">✔️ Sim (protocolo específico)</label>
+        </div>
+      </div>
+
+      <!-- Sub-seção enteral, aparece quando marcado Sim -->
+      <div class="enteral-section" id="enteralBlock">
+        <div class="enteral-card">
+          <div class="enteral-title">
+            🧪 Parâmetros Enterais
+            <span class="badge-experimental">Uso restrito</span>
+          </div>
+          <div class="grid-2">
+            <div class="campo">
+              <label for="formulaEnteral">Fórmula / Produto</label>
+              <select id="formulaEnteral" name="formulaEnteral">
+                <option value="">— Definir com nutricionista —</option>
+                <option>Dieta Polimérica Padrão</option>
+                <option>Dieta Polimérica Hipercalórica</option>
+                <option>Dieta Oligomérica (semielementar)</option>
+                <option>Dieta Elementar</option>
+                <option>Específica para Diabetes</option>
+                <option>Específica para Insuficiência Renal</option>
+                <option>Específica para Insuficiência Hepática</option>
+                <option>Específica para Imunomodulação</option>
+                <option>A definir — aguardar avaliação nutricional</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="via">Via de administração</label>
+              <select id="via" name="via">
+                <option value="">— Selecione —</option>
+                <option>Sonda Nasogástrica (SNG)</option>
+                <option>Sonda Nasoenteral (SNE)</option>
+                <option>Gastrostomia (GTT)</option>
+                <option>Jejunostomia</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="volumeEnteral">Volume (ml/h)</label>
+              <input type="number" id="volumeEnteral" name="volumeEnteral" placeholder="ml/h" min="10" max="200" step="5">
+            </div>
+            <div class="campo">
+              <label for="velocidade">Velocidade de infusão</label>
+              <select id="velocidade" name="velocidade">
+                <option value="">— Selecione —</option>
+                <option>Contínua (24h)</option>
+                <option>Intermitente (6/6h)</option>
+                <option>Intermitente (8/8h)</option>
+                <option>Bolus</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OBSERVAÇÕES -->
+    <div class="secao-titulo">📝 Observações</div>
+
+    <div class="form-card">
+      <div class="campo">
+        <label for="observacoes">Observações clínicas / instruções adicionais</label>
+        <textarea id="observacoes" name="observacoes" placeholder="Ex: paciente disfágico, necessita de engrossante; jejum pré-procedimento até as 14h; preferências religiosas..."></textarea>
+      </div>
+    </div>
+
+    <!-- SOLICITANTE -->
+    <div class="secao-titulo">👩‍⚕️ Dados do Solicitante</div>
+
+    <div class="form-card">
+      <div class="grid-2">
+        <div class="campo span-2">
+          <label for="solicitante">Nome do profissional <span class="req">*</span></label>
+          <input type="text" id="solicitante" name="solicitante" placeholder="Nome completo" required>
+        </div>
+        <div class="campo">
+          <label for="categoria">Categoria</label>
+          <select id="categoria" name="categoria">
+            <option value="">— Selecione —</option>
+            <option>Médico(a)</option>
+            <option>Enfermeiro(a)</option>
+            <option>Técnico(a) de Enfermagem</option>
+            <option>Nutricionista</option>
+            <option>Residente Médico</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="registro">CRM / COREN / CFN</label>
+          <input type="text" id="registro" name="registro" placeholder="Nº do registro">
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTÃO ENVIAR -->
+    <button type="submit" class="btn-submit" id="btnEnviar">
+      <span id="btnTexto">📨 Registrar Pedido de Dieta</span>
+      <span class="spinner" id="spinner"></span>
+    </button>
+
+    <!-- FEEDBACK -->
+    <div class="feedback sucesso" id="feedbackSucesso">
+      ✅ Pedido registrado com sucesso! A equipe de nutrição foi notificada.
+    </div>
+    <div class="feedback erro" id="feedbackErro">
+      ❌ Erro ao enviar. Verifique sua conexão ou tente novamente.
+    </div>
+
+  </form>
+</div>
+
+<footer>
+  🍽️ Sistema de Pedido de Dieta · UPA Rocinha<br>
+  Nutrição Clínica • Atualizado 2026
+</footer>
+
+<!-- ═══ JAVASCRIPT ══════════════════════════════════════════════════════════ -->
+<script>
+  // ────────────────────────────────────────────────────────────
+  // ⚠️  SUBSTITUA PELA URL DO SEU WEB APP DO APPS SCRIPT ABAIXO
+  // Formato: https://script.google.com/macros/s/SEU_ID_AQUI/exec
+  // ────────────────────────────────────────────────────────────
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxGJ19c7s7VPIG7J9xuNUZKaFf8IXfpz6_l2XDkIK4UhpbSGP6u0hN7Ibg5fbhmRXBRog/exec";
+
+  // Mostrar / ocultar bloco enteral
+  document.querySelectorAll('input[name="enteral"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const bloco = document.getElementById('enteralBlock');
+      bloco.classList.toggle('aberto', radio.value === 'Sim' && radio.checked);
+    });
+  });
+
+  // Coletar checkboxes de restrições
+  function getRestricoes() {
+    const ids = ['r-sal','r-acucar','r-gluten','r-lactose','r-gordura','r-potassio','r-fibra'];
+    const marcados = ids
+      .filter(id => document.getElementById(id).checked)
+      .map(id => document.getElementById(id).value);
+    const livre = document.getElementById('restricao-livre').value.trim();
+    if (livre) marcados.push(livre);
+    return marcados.join(', ') || 'Nenhuma';
+  }
+
+  // Submissão
+  document.getElementById('formDieta').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Validação simples
+    const obrigatorios = ['paciente','leito','solicitante'];
+    let valido = true;
+    obrigatorios.forEach(id => {
+      const campo = document.getElementById(id);
+      if (!campo.value.trim()) {
+        campo.style.borderColor = '#ef4444';
+        campo.focus();
+        valido = false;
+      } else {
+        campo.style.borderColor = '';
+      }
+    });
+    if (!valido) return;
+
+    // UX: loading
+    const btn    = document.getElementById('btnEnviar');
+    const texto  = document.getElementById('btnTexto');
+    const spin   = document.getElementById('spinner');
+    const sucesso = document.getElementById('feedbackSucesso');
+    const erro    = document.getElementById('feedbackErro');
+
+    btn.disabled = true;
+    texto.textContent = 'Enviando...';
+    spin.style.display = 'inline-block';
+    sucesso.style.display = erro.style.display = 'none';
+
+    const agora = new Date();
+    const dataHora = agora.toLocaleDateString('pt-BR') + ' ' + agora.toLocaleTimeString('pt-BR');
+
+    const payload = {
+      dataHora,
+      leito:          document.getElementById('leito').value.trim(),
+      paciente:       document.getElementById('paciente').value.trim(),
+      idade:          document.getElementById('idade').value.trim(),
+      peso:           document.getElementById('peso').value.trim(),
+      diagnostico:    document.getElementById('diagnostico').value.trim(),
+      tipoDieta:      document.querySelector('input[name="tipoDieta"]:checked')?.value || '',
+      consistencia:   document.getElementById('consistencia').value,
+      volume:         document.getElementById('volume').value,
+      restricoes:     getRestricoes(),
+      enteral:        document.querySelector('input[name="enteral"]:checked')?.value || 'Não',
+      formulaEnteral: document.getElementById('formulaEnteral').value,
+      volumeEnteral:  document.getElementById('volumeEnteral').value,
+      via:            document.getElementById('via').value,
+      velocidade:     document.getElementById('velocidade').value,
+      observacoes:    document.getElementById('observacoes').value.trim(),
+      solicitante:    document.getElementById('solicitante').value.trim(),
+      categoria:      document.getElementById('categoria').value,
+      registro:       document.getElementById('registro').value.trim(),
+    };
+
+    // ── Verificação: URL configurada?
+    if (APPS_SCRIPT_URL === "COLE_AQUI_A_URL_DO_SEU_WEB_APP") {
+      btn.disabled = false;
+      texto.textContent = '📨 Registrar Pedido de Dieta';
+      spin.style.display = 'none';
+      erro.textContent = '⚙️ Configure a URL do Apps Script no código HTML antes de usar.';
+      erro.style.display = 'flex';
+      return;
+    }
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      // no-cors não retorna body, consideramos sucesso se não lançou exceção
+      sucesso.style.display = 'flex';
+      document.getElementById('formDieta').reset();
+      document.getElementById('enteralBlock').classList.remove('aberto');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (err) {
+      console.error(err);
+      erro.textContent = '❌ Erro ao enviar. Verifique sua conexão e tente novamente.';
+      erro.style.display = 'flex';
+    } finally {
+      btn.disabled = false;
+      texto.textContent = '📨 Registrar Pedido de Dieta';
+      spin.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>
